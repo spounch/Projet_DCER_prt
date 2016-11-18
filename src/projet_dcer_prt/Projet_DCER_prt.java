@@ -1,8 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+Auteur : Jérémie Pannequin
+18/11/2016
+Version 1.0
+Mise en place de la bdd
+    Liste_defauts
+    Liste_solutions
+Interface graphique
+    Affichage du numéro de panne et sa description de la panne en titre de fenêtre
+    Affichage des solutions correspondantes à une panne
+*/
+
 package projet_dcer_prt;
 
 import java.awt.GraphicsDevice;
@@ -116,7 +123,25 @@ public class Projet_DCER_prt {
             
         }
         
+    public static String DescriptionDefaut (int defaut){
+        String DescriptionDefaut = null;
+        try{
+            String sql = "select distinct (DESCRIPTION_DEFAUT) from APP.LISTE_DEFAUTS where ID_DEFAUT = ? ";
+            st2 =connexion.prepareStatement(sql);
+            st2.setString(1,String.valueOf(defaut));
+            rs=st2.executeQuery();
+            rs.next();
+            DescriptionDefaut = rs.getString("DESCRIPTION_DEFAUT");
+        }
+         catch(Exception e)
+            {
+                System.out.println(e);
+                System.out.println("erreur requête, DescriptionDefaut");
+                return null;
+            }
         
+        return DescriptionDefaut;
+    }
         
     public static String MdpEmploye(String matricule){
       
@@ -164,7 +189,10 @@ public class Projet_DCER_prt {
         
         // lancement de la fenêtre d'acceuil
         int code_erreur = 1;
-        JFrame fenetre = new acceuil(code_erreur);
+        // on récupère la description du code defaut
+        String descriptionDefaut = DescriptionDefaut(code_erreur);
+        JFrame fenetre = new acceuil(code_erreur, descriptionDefaut);
+        
         fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
         fenetre.setVisible(true);
         fenetre.setTitle("Menu Principal");

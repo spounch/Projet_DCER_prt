@@ -24,9 +24,9 @@ public class acceuil extends javax.swing.JFrame {
     /**
      * Creates new form acceuil
      */
-    public acceuil(int code_erreur) {
+    public acceuil(int code_erreur, String descriptionDefaut) {
         initComponents();
-        
+        jLabel1.setText("Acceuil : Defaut " + code_erreur + " " + descriptionDefaut);
         // récupérer les infos de la base de données et les insérer dans le tableau
         // à partir du code erreur on va selectionner les solutions qui correspondent à la panne
         
