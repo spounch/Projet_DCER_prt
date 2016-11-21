@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import static sun.audio.AudioDevice.device;
+import sun.misc.Cache;
 
 public class Projet_DCER_prt {
 
@@ -72,8 +73,6 @@ public class Projet_DCER_prt {
       System.out.println("donnée à l'indice " + i + " = " + al.get(i));
     } */
     /// aide arraylist !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-        
-        
         
         
         
@@ -169,7 +168,16 @@ public class Projet_DCER_prt {
     
 }
             
-
+/*public static  void DetailSolution(int code_erreur, String descriptionDefaut) {
+    
+        JFrame fenetre2 = new Detail_solution(code_erreur, descriptionDefaut);
+        fenetre2.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        fenetre2.setVisible(true);
+        fenetre2.setTitle("Menu Principal");
+        //Termine le processus lorsqu'on clique sur la croix rouge
+        fenetre2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+}*/
         
     
     
@@ -192,17 +200,21 @@ public class Projet_DCER_prt {
         // on récupère la description du code defaut
         String descriptionDefaut = DescriptionDefaut(code_erreur);
         JFrame fenetre = new acceuil(code_erreur, descriptionDefaut);
-        
         fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
         fenetre.setVisible(true);
-        fenetre.setTitle("Menu Principal");
+        fenetre.setTitle("Logiciel DCER");
         //Termine le processus lorsqu'on clique sur la croix rouge
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
-         
-
         
+        //fenêtre détail solution
+        /*JFrame fenetre2 = new Detail_solution(code_erreur, descriptionDefaut);
+        fenetre2.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        fenetre2.setVisible(true);
+        fenetre2.setTitle("Menu Principal");
+        //Termine le processus lorsqu'on clique sur la croix rouge
+        fenetre2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
         
         
             }
