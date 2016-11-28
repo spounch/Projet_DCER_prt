@@ -5,14 +5,17 @@
  */
 package projet_dcer_prt;
 
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import static projet_dcer_prt.Projet_DCER_prt.ListeSolution;
+import static projet_dcer_prt.Projet_DCER_prt.getListeSolution;
 
 
 /**
@@ -26,33 +29,14 @@ public class acceuil extends javax.swing.JFrame {
      */
     public acceuil(int code_erreur, String descriptionDefaut) {
         initComponents();
-        jLabel1.setText("Acceuil : Defaut " + code_erreur + " " + descriptionDefaut);
-        // récupérer les infos de la base de données et les insérer dans le tableau
-        // à partir du code erreur on va selectionner les solutions qui correspondent à la panne
-        
-        ArrayList<Object[]> ensembleDesSolutions; //tableau compact dyn d'Object
-        Object[] row;
-        ensembleDesSolutions = ListeSolution(1);
-        
-        Iterator<Object[]> it = ensembleDesSolutions.iterator();
- 
-        while (it.hasNext()) {
-            row = it.next();
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.addRow(row);
-        }
-        
-        
-        //Object[] row = { "data1", "data2", "data3", "data4", "data5", "data6" };
-        
-        //model.addTableModelListener((TableModelListener) ensembleDesSolutions);
+        this.setContentPane(new Affichage_solutions(code_erreur, descriptionDefaut,this));
+        //this.setContentPane(new Detail_solution());
+        this.repaint();
         
     }
     
 
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,110 +46,22 @@ public class acceuil extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(20, 20));
-
-        jButton1.setText("Détail solution");
-        jButton1.setMaximumSize(new java.awt.Dimension(40, 30));
-        jButton1.setMinimumSize(new java.awt.Dimension(40, 30));
-        jButton1.setPreferredSize(new java.awt.Dimension(40, 30));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Acceuil : défaut n ");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Solution", "Type", "Date", "Fiabilité", "Documentation", "Photos"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE)))
-                .addGap(22, 22, 22))
+            .addGap(0, 338, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113))
+            .addGap(0, 224, Short.MAX_VALUE)
         );
-
-        jLabel1.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        
-        
-        
-        
-        //Reponse R = TPCineL3A2.infoRealisateurEtActeur(titre);
-        
-        
-        //Projet_DCER_prt.listeEmploye("tet");
-        
-        
-          //      Interaction_bdd interact1 = new Interaction_bdd();
-        /*String element = "matricule";
-        String table = "employe" ;
-        try {
-            interact1.lecture(element,table);  // on va lire le matricule des employé dans la table employe
-        } catch (SQLException ex) {
-            Logger.getLogger(acceuil.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,9 +69,5 @@ public class acceuil extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
