@@ -128,6 +128,48 @@ public class Projet_DCER_prt {
         return DescriptionDefaut;
     }
        
+    public static void setVote (int code_erreur, String nomSolution, boolean causeTraitee){
+        
+        try {
+            // on récupère le nb de vote actuel + le % de cause traité
+            String sql = "select * from APP.LISTE_SOLUTIONS where nom_solution = ? and  id_defaut = ?";
+            st2 = connexion.prepareStatement(sql);
+            st2.setString(1, nomSolution);
+            st2.setString(2, String.valueOf(code_erreur));
+            rs=st2.executeQuery();
+            rs.next();
+            
+            int nbVotes = rs.getInt("nombre_votes");
+            double pourcentCauseTraitees = rs.getInt("cause_traitee");
+            
+            // on calcul le nouveau % cause traité pour le mettre à jour
+            if (causeTraitee == true)
+            pourcentCauseTraitees = (((pourcentCauseTraitees*nbVotes/100)+1)/(nbVotes+1))*100;
+            else
+            pourcentCauseTraitees = (((pourcentCauseTraitees*nbVotes/100))/(nbVotes+1))*100;
+            // on incrémente le nb de vote
+            nbVotes++;
+      
+            // on met à jour la base de donnée
+            sql = "UPDATE APP.LISTE_SOLUTIONS SET nombre_votes = ?," // nbVotes
+                                                + "cause_traitee = ? " //pourcentCauseTraitees
+                    + "where nom_solution = ? and  id_defaut = ?";
+            st2 = connexion.prepareStatement(sql);
+            st2.setInt(1, nbVotes);
+            st2.setDouble(2, pourcentCauseTraitees);
+            st2.setString(3, nomSolution);
+            st2.setString(4, String.valueOf(code_erreur));
+            st2.execute();
+            
+        }
+        catch(Exception e)
+            {
+                System.out.println(e);
+                System.out.println("erreur requête, setVote");
+            }
+      
+    }
+    
     public static ArrayList<String> getInfosSolution(String nomSolution, int code_erreur) {
        
         ArrayList<String> InfosSolution = new ArrayList<>();
@@ -173,7 +215,6 @@ public class Projet_DCER_prt {
         //Termine le processus lorsqu'on clique sur la croix rouge
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-
             }
     
     
